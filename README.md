@@ -6,6 +6,21 @@
 
 The Obsidian-Excalidraw plugin integrates [Excalidraw](https://excalidraw.com/), a feature rich sketching tool, into Obsidian. You can store and edit Excalidraw files in your vault, you can embed drawings into your documents, and you can link to documents and other drawings to/and from Excalidraw. For a showcase of Excalidraw features watch the videos below.
 
+> ## ⚡ Feather fork
+>
+> This repository is the **Feather** performance fork of the Obsidian Excalidraw plugin, focused on large drawings and e-ink tablets (Boox/Onyx):
+>
+> - Images are decoded when they enter the viewport instead of all at once when a drawing opens, keeping memory bounded on drawings with many images or PDF pages.
+> - Scene bookkeeping avoids full-scene scans on every pen movement, so drawing stays responsive as drawings grow.
+> - New **Feather performance** settings (profile, vector/image level of detail, interaction detail, ink overlay, raw pointer sampling) and a diagnostics overlay.
+> - New command: **Feather: Copy diagnostics report**.
+>
+> The plugin id, vault files, scripts, and settings remain compatible with the upstream plugin. Drawing format is unchanged.
+>
+> **Install (desktop or mobile):** use [BRAT](https://github.com/TfTHacker/obsidian42-brat) with the beta plugin repository `raharu-dev/obsidian-excalidraw-plugin`, or download `main.js`, `manifest.json`, and `styles.css` from a `feather-*` pre-release into `.obsidian/plugins/obsidian-excalidraw-plugin/`. To return to upstream, reinstall the community plugin.
+>
+> The matching Excalidraw runtime fork is [`raharu-dev/excalidraw-feather`](https://github.com/raharu-dev/excalidraw-feather); each Feather release embeds a pinned commit of it.
+
 ![Excalidraw Screenshot](https://github.com/user-attachments/assets/dde1df97-c6ae-491c-b546-65ec2d625326)
 
 Excalidraw for Obsidian keeps evolving; it is extremely feature‑rich and can feel intimidating at first. The Video Walkthrough below should ease that initial overwhelm. For a comprehensive, searchable knowledge base covering features, settings, scripting, workflows, and visual thinking methods, explore the public [NotebookLM workbook](https://notebooklm.google.com/notebook/42d76a2f-c11d-4002-9286-1683c43d0ab0) (a must‑have learning resource). 

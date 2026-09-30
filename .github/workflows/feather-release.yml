@@ -1,0 +1,87 @@
+# Feather pre-release workflow.
+#
+# Builds the patched Excalidraw fork at a pinned commit, stages its Obsidian
+# artifacts into this plugin, builds the plugin, and publishes the installable
+# assets as a GitHub pre-release. The pinned fork SHA is an input so releases
+# stay reproducible when the fork branch moves.
+name: Feather release
+
+on:
+  workflow_dispatch:
+    inputs:
+      fork_sha:
+        description: "excalidraw-feather commit to embed"
+        required: true
+        default: "e8c75fc2a24f6675b5720d20cfaa9891d685cccd"
+      release_tag:
+        description: "Release tag (e.g. feather-m0)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout plugin
+        uses: actions/checkout@v4
+
+      - name: Checkout Feather fork
+        uses: actions/checkout@v4
+        with:
+          repository: raharu-dev/excalidraw-feather
+          ref: ${{ inputs.fork_sha }}
+          path: excalidraw-feather
+          fetch-depth: 1
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+          cache-dependency-path: excalidraw-feather/yarn.lock
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Install fork dependencies
+        working-directory: excalidraw-feather
+        run: yarn install --frozen-lockfile
+
+      - name: Build fork artifacts
+        working-directory: excalidraw-feather/packages/excalidraw
+        run: yarn build:obsidian
+
+      - name: Install plugin dependencies
+        run: npm ci
+
+      - name: Stage fork artifacts
+        run: |
+          stage=node_modules/@zsviczian/excalidraw/dist/obsidian
+          mkdir -p "$stage"
+          cp excalidraw-feather/packages/excalidraw/dist/obsidian/excalidraw.production.min.js "$stage/"
+          cp excalidraw-feather/packages/excalidraw/dist/obsidian/excalidraw.production.min.css "$stage/"
+          cp excalidraw-feather/packages/excalidraw/dist/obsidian/excalidraw.development.js "$stage/"
+          cp excalidraw-feather/packages/excalidraw/dist/obsidian/excalidraw.development.css "$stage/"
+
+      - name: Build plugin
+        run: npm run build
+
+      - name: Pack release assets
+        run: |
+          cd dist
+          zip -r "../feather-${{ inputs.release_tag }}.zip" main.js manifest.json styles.css
+
+      - name: Publish pre-release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ inputs.release_tag }}
+          name: "Feather ${{ inputs.release_tag }}"
+          prerelease: true
+          files: |
+            dist/main.js
+            dist/manifest.json
+            dist/styles.css
+            feather-${{ inputs.release_tag }}.zip
