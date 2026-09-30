@@ -1,4 +1,8 @@
 import type ExcalidrawPlugin from "src/core/main";
+import {
+  getFeatherImageBudgetBytes,
+  resolveFeatherProfile,
+} from "src/core/featherProfile";
 import { ExcalidrawLib } from "../../types/excalidrawLib";
 
 /**
@@ -44,4 +48,21 @@ export const createObsidianExcalidrawHostAdapter = (
       container ?? undefined,
       suppressPlaceholder,
     ),
+  getPerformanceConfig: () => {
+    const settings = plugin.settings;
+    const profile = resolveFeatherProfile(settings);
+    return {
+      profile,
+      vectorLod: settings.featherVectorLod,
+      imageLod: settings.featherImageLod,
+      imageBudgetBytes: getFeatherImageBudgetBytes(profile),
+      interactionDetail: settings.featherInteractionDetail,
+      inkOverlay: settings.featherInkOverlay,
+      rawPointerUpdates: settings.featherRawPointerUpdates,
+      hudEnabled: settings.featherHud,
+    };
+  },
+  reportPerformanceStats: (stats) => {
+    plugin.reportFeatherStats(stats);
+  },
 });

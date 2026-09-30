@@ -111,8 +111,46 @@ export declare namespace ExcalidrawLib {
     ) => string;
   }>;
 
+  /** Resolved Feather performance profile; the plugin resolves "auto". */
+  type FeatherProfile = "high" | "balanced" | "eink" | "lowend";
+
+  /** Performance knobs consumed by the Feather runtime. */
+  type FeatherPerformanceConfig = {
+    profile: FeatherProfile;
+    vectorLod: boolean;
+    imageLod: boolean;
+    imageBudgetBytes: number;
+    interactionDetail: "full" | "reduced" | "minimal";
+    inkOverlay: boolean;
+    rawPointerUpdates: boolean;
+    hudEnabled: boolean;
+  };
+
+  /** Diagnostics sample reported by the Feather runtime. */
+  type FeatherStats = {
+    timestamp: number;
+    fps: number;
+    frameP50: number;
+    frameP95: number;
+    longTasks: number;
+    elementsTotal: number;
+    elementsVisible: number;
+    images: {
+      entries: number;
+      bytes: number;
+      pending: number;
+    };
+    pointers: {
+      types: string[];
+      lastType: string | null;
+      pressureRange: [number, number] | null;
+      coalescedMax: number;
+    };
+    heapBytes: number | null;
+  };
+
   type ObsidianExcalidrawHostAdapter = Readonly<{
-    protocolVersion: 2;
+    protocolVersion: 3;
     isDoubleTapEraserEnabled: () => boolean;
     getZoomToFitMaxLevel: () => number;
     isPenModeCrosshairVisible: () => boolean;
@@ -123,6 +161,8 @@ export declare namespace ExcalidrawLib {
     getZoomMax: () => number;
     isContextMenuDisabled: () => boolean;
     shouldSyncElementLinkWithText: () => boolean;
+    getPerformanceConfig: () => FeatherPerformanceConfig;
+    reportPerformanceStats: (stats: FeatherStats) => void;
     loadFontFromFile: (filename: string) => Promise<ArrayBuffer | undefined>;
     getMermaid: () => Promise<MermaidToExcalidrawLibProps>;
     runAction: (action: "anyFile" | "LaTeX" | "card") => void;
@@ -315,7 +355,7 @@ export declare namespace ExcalidrawLib {
   function configureObsidianCommonHost(
     adapter: ObsidianCommonHostAdapter,
   ): () => void;
-  const OBSIDIAN_EXCALIDRAW_HOST_PROTOCOL_VERSION: 2;
+  const OBSIDIAN_EXCALIDRAW_HOST_PROTOCOL_VERSION: 3;
   function configureObsidianExcalidrawHost(
     adapter: ObsidianExcalidrawHostAdapter,
   ): () => void;

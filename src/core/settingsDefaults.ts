@@ -105,6 +105,13 @@ export interface ExcalidrawSettings {
   penModeDoubleTapEraser: boolean;
   penModeSingleFingerPanning: boolean;
   penModeCrosshairVisible: boolean;
+  featherProfile: "auto" | "high" | "balanced" | "eink" | "lowend";
+  featherVectorLod: boolean;
+  featherImageLod: boolean;
+  featherInteractionDetail: "full" | "reduced" | "minimal";
+  featherInkOverlay: boolean;
+  featherRawPointerUpdates: boolean;
+  featherHud: boolean;
   renderImageInMarkdownReadingMode: boolean;
   renderImageInHoverPreviewForMDNotes: boolean;
   renderImageInMarkdownToPDF: boolean;
@@ -552,6 +559,13 @@ export const DEFAULT_SETTINGS: ExcalidrawSettings = {
   penModeDoubleTapEraser: true,
   penModeSingleFingerPanning: true,
   penModeCrosshairVisible: true,
+  featherProfile: "auto",
+  featherVectorLod: true,
+  featherImageLod: true,
+  featherInteractionDetail: "reduced",
+  featherInkOverlay: true,
+  featherRawPointerUpdates: true,
+  featherHud: false,
   renderImageInMarkdownReadingMode: false,
   renderImageInHoverPreviewForMDNotes: false,
   renderImageInMarkdownToPDF: false,

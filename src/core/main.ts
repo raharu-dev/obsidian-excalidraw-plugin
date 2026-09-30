@@ -38,6 +38,7 @@ import type { ExcalidrawSettings } from "./settingsDefaults";
 import { ExcalidrawAutomate } from "../shared/ExcalidrawAutomate";
 import { initExcalidrawAutomate } from "src/utils/excalidrawAutomateUtils";
 import { t } from "../lang/helpers";
+import { ExcalidrawLib } from "../types/excalidrawLib";
 import {
   createOrOverwriteFile,
   fileShouldDefaultAsExcalidraw,
@@ -189,6 +190,8 @@ export default class ExcalidrawPlugin extends Plugin {
   public activeExcalidrawView: ExcalidrawView = null;
   public lastActiveExcalidrawFilePath: string = null;
   public lastActiveExcalidrawLeafID: string = null;
+  /** Latest diagnostics sample reported by the evaluated Feather runtime. */
+  public lastFeatherStats: ExcalidrawLib.FeatherStats | null = null;
   public hover: { linkText: string; sourcePath: string } = {
     linkText: null,
     sourcePath: null,
@@ -400,6 +403,14 @@ export default class ExcalidrawPlugin extends Plugin {
       this.settings.defaultPenMode === "always" ||
       (this.settings.defaultPenMode === "mobile" && DEVICE.isMobile)
     );
+  }
+
+  /**
+   * Stores the latest diagnostics sample reported by the evaluated Feather
+   * runtime. Session-scoped; surfaced through the copy-diagnostics command.
+   */
+  public reportFeatherStats(stats: ExcalidrawLib.FeatherStats): void {
+    this.lastFeatherStats = stats;
   }
 
   /** Returns the configured CJK ranges when local font assets are available. */

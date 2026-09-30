@@ -778,6 +778,41 @@ export default {
   PEN_HEAD: "Перо",
   PEN_DESC:
     "Настройте автоматический режим пера, сенсорные жесты, ластик и перекрестие свободного рисования.",
+  FEATHER_HEAD: "Feather performance",
+  FEATHER_DESC:
+    "Performance tuning for large drawings, e-ink devices, and touch drawing.",
+  FEATHER_PROFILE_NAME: "Performance profile",
+  FEATHER_PROFILE_DESC:
+    "Selects the performance preset. Auto detects mobile and low-memory devices; on Boox/Onyx tablets select E-ink device. Profiles only set defaults for the Feather settings below; drawing format and scripts are unaffected.",
+  FEATHER_PROFILE_OPTION_AUTO: "Auto",
+  FEATHER_PROFILE_OPTION_HIGH: "High performance",
+  FEATHER_PROFILE_OPTION_BALANCED: "Balanced",
+  FEATHER_PROFILE_OPTION_EINK: "E-ink device",
+  FEATHER_PROFILE_OPTION_LOWEND: "Low memory",
+  FEATHER_VECTOR_LOD_NAME: "Vector level of detail",
+  FEATHER_VECTOR_LOD_DESC:
+    "Simplifies far-away or tiny elements while panning, zooming, or drawing, then restores full detail when idle. Selected and edited elements always render at full detail.",
+  FEATHER_IMAGE_LOD_NAME: "Image level of detail",
+  FEATHER_IMAGE_LOD_DESC:
+    "Decodes images only when they enter the viewport, using downscaled previews at low zoom and full resolution when zoomed in. Keeps memory bounded on large drawings with many images or PDF pages.",
+  FEATHER_INTERACTION_DETAIL_NAME: "Interaction rendering detail",
+  FEATHER_INTERACTION_DETAIL_DESC:
+    "How much detail is kept while the viewport is moving or a stroke is in progress. Full keeps today's rendering; Reduced simplifies one level; Minimal keeps only coarse shapes.",
+  FEATHER_INTERACTION_DETAIL_OPTION_FULL: "Full",
+  FEATHER_INTERACTION_DETAIL_OPTION_REDUCED: "Reduced",
+  FEATHER_INTERACTION_DETAIL_OPTION_MINIMAL: "Minimal",
+  FEATHER_INK_OVERLAY_NAME: "Low-latency ink overlay",
+  FEATHER_INK_OVERLAY_DESC:
+    "Draws the active pen stroke on a separate overlay and commits it when the stroke ends. Reduces repainted pixels on e-ink screens while drawing.",
+  FEATHER_RAW_POINTER_NAME: "Raw pointer sampling",
+  FEATHER_RAW_POINTER_DESC:
+    "Uses pointerrawupdate and coalesced events when available so fast stylus movement is not lost between frames.",
+  FEATHER_HUD_NAME: "Diagnostics overlay",
+  FEATHER_HUD_DESC:
+    "Shows frame times, element counts, image cache usage, and observed pointer types on screen. Turn off for normal use.",
+  FEATHER_COPY_DIAGNOSTICS: "Feather: Copy diagnostics report",
+  FEATHER_COPY_DIAGNOSTICS_EMPTY:
+    "No Feather diagnostics report yet. Enable the diagnostics overlay and open a drawing first.",
   GRID_HEAD: "Сетка",
   GRID_DESC:
     "Настройте направление сетки, автоматический или пользовательский цвет и прозрачность.",

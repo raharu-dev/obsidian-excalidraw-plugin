@@ -271,6 +271,19 @@ export class CommandManager {
     });
 
     this.addCommand({
+      id: "feather-copy-diagnostics",
+      name: t("FEATHER_COPY_DIAGNOSTICS"),
+      callback: () => {
+        const stats = this.plugin.lastFeatherStats;
+        if (!stats) {
+          new Notice(t("FEATHER_COPY_DIAGNOSTICS_EMPTY"));
+          return;
+        }
+        void navigator.clipboard.writeText(JSON.stringify(stats, null, 2));
+      },
+    });
+
+    this.addCommand({
       id: "excalidraw-unzip-file",
       name: t("UNZIP_CURRENT_FILE"),
       checkCallback: (checking: boolean) => {

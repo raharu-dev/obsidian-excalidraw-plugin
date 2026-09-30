@@ -20,6 +20,17 @@ I build this plugin as a labor of love. Curious about the philosophy behind it? 
 "2.28.1": `
 Re-released due to a minor deployment hiccup, hopefully fixed now.
 `,
+"2.28.1-feather.0": `
+# Feather performance (fork)
+
+This is the Feather fork of the Obsidian Excalidraw plugin: performance work for large drawings and e-ink devices, plus new **Feather performance** settings and a diagnostics overlay.
+
+- Images are decoded when they enter the viewport instead of all at once when a drawing opens, keeping memory bounded on drawings with many images or PDF pages.
+- Scene change bookkeeping no longer scans every element on every pen movement, so drawing stays responsive as drawings grow.
+- New "Feather: Copy diagnostics report" command.
+
+Drawing files, scripts, and existing settings remain fully compatible.
+`,
 "2.28.0": `
 **Note to ExcaliBrain users:** Update ExcaliBrain. Excalidraw 2.28.0 breaks compatibility with ExcaliBrain v0.2.18.
 

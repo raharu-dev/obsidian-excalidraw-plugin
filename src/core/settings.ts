@@ -949,6 +949,17 @@ export class ExcalidrawSettingTab extends PluginSettingTab {
             this.renderSettingSpecs(container, this.getPenSpecs()),
         },
         {
+          name: t("FEATHER_HEAD"),
+          description: t("FEATHER_DESC"),
+          buildDefinitions: () =>
+            this.toDeclarativeDefinitions(this.getFeatherPerformanceSpecs()),
+          renderLegacy: (container) =>
+            this.renderSettingSpecs(
+              container,
+              this.getFeatherPerformanceSpecs(),
+            ),
+        },
+        {
           name: t("GRID_HEAD"),
           description: t("GRID_DESC"),
           buildDefinitions: () => this.getGridDefinitions(renderState),
@@ -3131,6 +3142,80 @@ export class ExcalidrawSettingTab extends PluginSettingTab {
         desc: fragWithHTML(t("SHOW_PEN_MODE_FREEDRAW_CROSSHAIR_DESC")),
         aliases: ["pen crosshair", "freedraw crosshair"],
         control: { type: "toggle", key: "penModeCrosshairVisible" },
+      },
+    ];
+  }
+
+  private getFeatherPerformanceSpecs(): SettingSpec[] {
+    return [
+      {
+        name: t("FEATHER_PROFILE_NAME"),
+        desc: fragWithHTML(t("FEATHER_PROFILE_DESC")),
+        aliases: ["performance profile", "eink", "boox", "low memory"],
+        control: {
+          type: "dropdown",
+          key: "featherProfile",
+          options: [
+            { value: "auto", label: t("FEATHER_PROFILE_OPTION_AUTO") },
+            { value: "high", label: t("FEATHER_PROFILE_OPTION_HIGH") },
+            { value: "balanced", label: t("FEATHER_PROFILE_OPTION_BALANCED") },
+            { value: "eink", label: t("FEATHER_PROFILE_OPTION_EINK") },
+            { value: "lowend", label: t("FEATHER_PROFILE_OPTION_LOWEND") },
+          ],
+        },
+      },
+      {
+        name: t("FEATHER_VECTOR_LOD_NAME"),
+        desc: fragWithHTML(t("FEATHER_VECTOR_LOD_DESC")),
+        aliases: ["vector lod", "level of detail", "large drawing"],
+        control: { type: "toggle", key: "featherVectorLod" },
+      },
+      {
+        name: t("FEATHER_IMAGE_LOD_NAME"),
+        desc: fragWithHTML(t("FEATHER_IMAGE_LOD_DESC")),
+        aliases: ["image lod", "image memory", "image preview"],
+        control: { type: "toggle", key: "featherImageLod" },
+      },
+      {
+        name: t("FEATHER_INTERACTION_DETAIL_NAME"),
+        desc: fragWithHTML(t("FEATHER_INTERACTION_DETAIL_DESC")),
+        aliases: ["interaction detail", "smoothing", "lod during gesture"],
+        control: {
+          type: "dropdown",
+          key: "featherInteractionDetail",
+          options: [
+            {
+              value: "full",
+              label: t("FEATHER_INTERACTION_DETAIL_OPTION_FULL"),
+            },
+            {
+              value: "reduced",
+              label: t("FEATHER_INTERACTION_DETAIL_OPTION_REDUCED"),
+            },
+            {
+              value: "minimal",
+              label: t("FEATHER_INTERACTION_DETAIL_OPTION_MINIMAL"),
+            },
+          ],
+        },
+      },
+      {
+        name: t("FEATHER_INK_OVERLAY_NAME"),
+        desc: fragWithHTML(t("FEATHER_INK_OVERLAY_DESC")),
+        aliases: ["ink overlay", "low latency", "eink drawing"],
+        control: { type: "toggle", key: "featherInkOverlay" },
+      },
+      {
+        name: t("FEATHER_RAW_POINTER_NAME"),
+        desc: fragWithHTML(t("FEATHER_RAW_POINTER_DESC")),
+        aliases: ["raw pointer", "pointerrawupdate", "stylus latency"],
+        control: { type: "toggle", key: "featherRawPointerUpdates" },
+      },
+      {
+        name: t("FEATHER_HUD_NAME"),
+        desc: fragWithHTML(t("FEATHER_HUD_DESC")),
+        aliases: ["hud", "diagnostics", "fps", "performance overlay"],
+        control: { type: "toggle", key: "featherHud" },
       },
     ];
   }
