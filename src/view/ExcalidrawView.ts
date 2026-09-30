@@ -4418,19 +4418,24 @@ export default class ExcalidrawView
     const hookServer = this.getHookServer();
     const sidepanel = ExcalidrawSidepanelView.getExisting(false);
 
-    const currentVersion = this.getSceneVersion(et);
+    const hasHookTargets =
+      Boolean(hookServer?.onSceneChangeHook) ||
+      Boolean(sidepanel && sidepanel.hasEATargetingView(this));
 
-    if (
-      !hookServer?.onSceneChangeHook &&
-      !(sidepanel && sidepanel.hasEATargetingView(this))
-    ) {
+    //feather: only compute the O(n) scene version when a hook consumes it
+    if (!hasHookTargets) {
       this.lastAppState = st;
-      this.lastElementsVersion = currentVersion;
+      this.lastElementsVersion = null;
       return;
     }
 
+    const currentVersion = this.getSceneVersion(et);
+
     const last = this.lastAppState;
-    const elementsChanged = currentVersion !== this.lastElementsVersion;
+    const elementsChanged =
+      this.lastElementsVersion === null
+        ? et.length > 0
+        : currentVersion !== this.lastElementsVersion;
 
     this.lastAppState = st;
     this.lastElementsVersion = currentVersion;
@@ -6042,7 +6047,8 @@ export default class ExcalidrawView
         st.editingGroupId === null &&*/
       (st.selectedLinearElement === null || !st.selectedLinearElement.isEditing)
     ) {
-      this.checkSceneVersion(et);
+      //feather: durable increments already dirty the scene; the previous
+      //full-scene version scan here was redundant O(n) work on every change
     }
 
     handleMarkdownImageEditorSelection(this, et, st.selectedElementIds);
